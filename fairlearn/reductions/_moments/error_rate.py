@@ -49,7 +49,7 @@ class ErrorRate(ClassificationMoment):
             self.fp_cost = 1.0
             self.fn_cost = 1.0
         elif (
-            type(costs) is dict
+            isinstance(costs, dict)
             and costs.keys() == {"fp", "fn"}
             and costs["fp"] >= 0.0
             and costs["fn"] >= 0.0
@@ -85,7 +85,7 @@ class ErrorRate(ClassificationMoment):
         total_fn_cost = np.sum(signed_errors[signed_errors > 0] * self.fn_cost)
         total_fp_cost = np.sum(-signed_errors[signed_errors < 0] * self.fp_cost)
         error_value = (total_fn_cost + total_fp_cost) / self.total_samples
-        error = pd.Series(data=error_value, index=self.index)
+        error = pd.Series(data=error_value, index=self.index).copy()
         self._gamma_descr = str(error)
         return error
 

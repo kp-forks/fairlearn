@@ -59,11 +59,12 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.linkcode",
     "sphinx.ext.mathjax",
-    "sphinx.ext.napoleon",
     "sphinx_gallery.gen_gallery",
     "sphinx_autodoc_typehints",  # needs to be AFTER napoleon
     "numpydoc",
     "matplotlib.sphinxext.plot_directive",
+    "sphinx_prompt",
+    "sphinx_copybutton",
 ]
 
 source_suffix = [".rst"]
@@ -90,6 +91,7 @@ templates_path = ["templates"]
 
 # generate autosummary even if no references
 autosummary_generate = True
+numpydoc_show_class_members = False
 
 
 # List of patterns, relative to source directory, that match files and
@@ -188,9 +190,7 @@ html_sidebars = {
 # ----------------
 
 # Change the ordering of the member documentation
-autodoc_default_options = {
-    "member-order": "groupwise"
-}
+autodoc_default_options = {"member-order": "groupwise"}
 
 # Options for the `::plot` directive
 # ----------------------------------
@@ -203,6 +203,7 @@ plot_html_show_source_link = False
 
 # Linking Code
 # ------------
+
 
 # The following is used by sphinx.ext.linkcode to provide links to github
 # based on pandas doc/source/conf.py
@@ -242,9 +243,7 @@ def linkcode_resolve(domain, info):
     else:
         linespec = ""
 
-    fn = os.path.relpath(fn, start=os.path.dirname(fairlearn.__file__)).replace(
-        os.sep, "/"
-    )
+    fn = os.path.relpath(fn, start=os.path.dirname(fairlearn.__file__)).replace(os.sep, "/")
     if tag_or_branch == "main":
         return (
             "http://github.com/fairlearn/fairlearn/blob"
